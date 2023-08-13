@@ -3,11 +3,11 @@ import Papa from 'papaparse';
 import axios from 'axios'; // Import the axios library
 import  './App.css'
 import { Button, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container, Grid } from '@material-ui/core';
+import _debounce from 'lodash/debounce';
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
-import _debounce from 'lodash/debounce';
 const debouncedHandleSpeechRecognition = _debounce(handleSpeechRecognition, 500);
 
 
