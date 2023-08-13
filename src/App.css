@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+/* Add these styles to your CSS */
+.mic-button {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 10px;
+  /* border-radius: 50%; */
+  cursor: pointer;
+}
+
+.mic-button:hover {
+  background-color: #1976D2;
+}
