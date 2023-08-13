@@ -66,7 +66,7 @@ function App() {
           finalText += transcript + ' ';
         }
       } else {
-        interimText += transcript + ' ';
+        interimText = transcript + ' ';
       }
     }
   
