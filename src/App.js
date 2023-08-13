@@ -7,6 +7,9 @@ import { Button, Typography, Table, TableHead, TableBody, TableRow, TableCell, C
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
+import _debounce from 'lodash/debounce';
+const debouncedHandleSpeechRecognition = _debounce(handleSpeechRecognition, 500);
+
 
 function App() {
   const [recognizedText, setRecognizedText] = useState('');
@@ -41,7 +44,9 @@ function App() {
 
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.onresult = handleSpeechRecognition;
+    recognition.onresult = (event) => {
+      debouncedHandleSpeechRecognition(event);
+    };
   }, []);
 
   useEffect(() => {
