@@ -5,7 +5,7 @@ import  './App.css'
 import { Button, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container, Grid } from '@material-ui/core';
 import _debounce from 'lodash/debounce';
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const SpeechRecognition = window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
 
@@ -56,24 +56,27 @@ function App() {
 
 
   const handleSpeechRecognition = (event) => {
+    let finalText = recognizedText; // Initialize finalText with the current recognizedText
     let interimText = '';
-    let finalText = '';
-
+  
     for (let i = 0; i < event.results.length; i++) {
       const transcript = event.results[i][0].transcript;
       if (event.results[i].isFinal) {
-        finalText += transcript + ' ';
+        if (!finalText.includes(transcript)) { // Check if transcript is new
+          finalText += transcript + ' ';
+        }
       } else {
         interimText += transcript + ' ';
       }
     }
-
-
-    setRecognizedText(finalText);
+  
+    setRecognizedText(finalText.trim()); // Update recognizedText only with new final results
+  
     if (isRecording) {
       setCapturedText(prevCapturedText => prevCapturedText + interimText);
     }
   };
+  
 
   const startRecording = () => {
     navigator.geolocation.getCurrentPosition(
