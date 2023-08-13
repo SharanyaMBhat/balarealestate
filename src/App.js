@@ -50,8 +50,8 @@ function App() {
   }, [csvData]);
 
   const handleSpeechRecognition = (event) => {
-    // let interimText = '';
-    let finalText = event.results[transcriptevent.results.length -1][0] 
+    let interimText = '';
+    let finalText = event.results[event.results.length -1][0].transcript
     // for (let i = 0; i < event.results.length; i++) {
     //   const transcript = event.results[i][0].transcript;
     //   if (event.results[i].isFinal) {
