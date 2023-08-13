@@ -3,9 +3,8 @@ import Papa from 'papaparse';
 import axios from 'axios'; // Import the axios library
 import  './App.css'
 import { Button, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container, Grid } from '@material-ui/core';
-import _debounce from 'lodash/debounce';
 
-const SpeechRecognition = window.webkitSpeechRecognition;
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
 
@@ -42,11 +41,7 @@ function App() {
 
     recognition.continuous = true;
     recognition.interimResults = true;
-    const debouncedHandleSpeechRecognition = _debounce(handleSpeechRecognition, 500);
-
-    recognition.onresult = (event) => {
-      debouncedHandleSpeechRecognition(event);
-    };
+    recognition.onresult = handleSpeechRecognition;
   }, []);
 
   useEffect(() => {
@@ -54,29 +49,23 @@ function App() {
     localStorage.setItem('csvData', csvString);
   }, [csvData]);
 
-
   const handleSpeechRecognition = (event) => {
-    // let finalText = recognizedText; // Initialize finalText with the current recognizedText
     // let interimText = '';
-    const transcript = event.results[i][0].transcript;
-
+    let finalText = event.results[transcriptevent.results.length -1][0] 
     // for (let i = 0; i < event.results.length; i++) {
+    //   const transcript = event.results[i][0].transcript;
     //   if (event.results[i].isFinal) {
-    //     if (!finalText.includes(transcript)) { // Check if transcript is new
-    //       finalText += transcript + ' ';
-    //     }
+    //     finalText += transcript + ' ';
     //   } else {
-    //     interimText = transcript + ' ';
+    //     interimText += transcript + ' ';
     //   }
     // }
-  
-    setRecognizedText(transcript); // Update recognizedText only with new final results
-  
-    // if (isRecording) {
-    //   setCapturedText(prevCapturedText => prevCapturedText + interimText);
-    // }
+
+    setRecognizedText(finalText);
+    if (isRecording) {
+      setCapturedText(prevCapturedText => prevCapturedText + interimText);
+    }
   };
-  
 
   const startRecording = () => {
     navigator.geolocation.getCurrentPosition(
