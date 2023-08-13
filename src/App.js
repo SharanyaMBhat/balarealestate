@@ -56,25 +56,25 @@ function App() {
 
 
   const handleSpeechRecognition = (event) => {
-    let finalText = recognizedText; // Initialize finalText with the current recognizedText
-    let interimText = '';
+    // let finalText = recognizedText; // Initialize finalText with the current recognizedText
+    // let interimText = '';
+    const transcript = event.results[i][0].transcript;
+
+    // for (let i = 0; i < event.results.length; i++) {
+    //   if (event.results[i].isFinal) {
+    //     if (!finalText.includes(transcript)) { // Check if transcript is new
+    //       finalText += transcript + ' ';
+    //     }
+    //   } else {
+    //     interimText = transcript + ' ';
+    //   }
+    // }
   
-    for (let i = 0; i < event.results.length; i++) {
-      const transcript = event.results[i][0].transcript;
-      if (event.results[i].isFinal) {
-        if (!finalText.includes(transcript)) { // Check if transcript is new
-          finalText += transcript + ' ';
-        }
-      } else {
-        interimText = transcript + ' ';
-      }
-    }
+    setRecognizedText(transcript); // Update recognizedText only with new final results
   
-    setRecognizedText(finalText.trim()); // Update recognizedText only with new final results
-  
-    if (isRecording) {
-      setCapturedText(prevCapturedText => prevCapturedText + interimText);
-    }
+    // if (isRecording) {
+    //   setCapturedText(prevCapturedText => prevCapturedText + interimText);
+    // }
   };
   
 
