@@ -8,8 +8,6 @@ import _debounce from 'lodash/debounce';
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
-const debouncedHandleSpeechRecognition = _debounce(handleSpeechRecognition, 500);
-
 
 function App() {
   const [recognizedText, setRecognizedText] = useState('');
@@ -44,6 +42,8 @@ function App() {
 
     recognition.continuous = true;
     recognition.interimResults = true;
+    const debouncedHandleSpeechRecognition = _debounce(handleSpeechRecognition, 500);
+
     recognition.onresult = (event) => {
       debouncedHandleSpeechRecognition(event);
     };
@@ -53,6 +53,7 @@ function App() {
     const csvString = Papa.unparse(csvData);
     localStorage.setItem('csvData', csvString);
   }, [csvData]);
+
 
   const handleSpeechRecognition = (event) => {
     let interimText = '';
@@ -66,6 +67,7 @@ function App() {
         interimText += transcript + ' ';
       }
     }
+
 
     setRecognizedText(finalText);
     if (isRecording) {
